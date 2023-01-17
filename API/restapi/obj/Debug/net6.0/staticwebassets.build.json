@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "lEKQLUSBNRmq2AbG+meqOkUIDj0E0xexqy1wOH8wOJA=",
+  "Source": "restapi",
+  "BasePath": "_content/restapi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
