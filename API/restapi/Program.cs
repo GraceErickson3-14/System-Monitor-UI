@@ -1,8 +1,13 @@
 using restapi.Interface;
 using restapi.Repository;
+using restapi.Models;
+using restapi.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<MongoDbSetting>(builder.Configuration.GetSection("MongoDB"));
+builder.Services.AddSingleton<MongoDBService>();
 // Add services to the container.
 
 builder.Services.AddControllers();
