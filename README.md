@@ -15,10 +15,12 @@ The user should download all of these in the screenshot:
  
 
 If the user runs into this problem:
+
+
+
 ![image](https://user-images.githubusercontent.com/72936062/214706716-9f3d230f-91c5-45b8-9acf-da17bb830a7c.png)
 
-
- Click run anyways
+Click run anyways
 
 Click this link and scroll down to usage:
 
