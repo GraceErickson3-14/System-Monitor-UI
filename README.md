@@ -4,7 +4,7 @@ Click this link to find the files to download:
 
 Releases · prometheus-community/windows_exporter
 
- When the user clicks the link, the usage shall scroll down to assets:
+When the user clicks the link, the usage shall scroll down to assets:
 
 ![image](https://user-images.githubusercontent.com/72936062/214706639-3e6b4287-cad8-4097-945f-4a068f78309a.png)
 
@@ -13,7 +13,6 @@ The user should download all of these in the screenshot:
 ![image](https://user-images.githubusercontent.com/72936062/214706693-099b1f49-5dbc-4972-9ec5-e65f819ba8f5.png)
 
  
-
 If the user runs into this problem:
 
 
