@@ -1,0 +1,26 @@
+﻿.section_CPU {
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: rgba(255, 255, 0, 0.1);
+    border: 1px solid rgba(255, 255, 0, 0.5);
+}
+
+.section_MEM {
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: #87CEFA; /* light blue color */
+    border-radius: #87CEFA 10px;
+    border: 1px solid #e6f7ff;
+}
+
+.section_DISK {
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: #FDB8C8;
+  
+    border-radius: #87CEFA 10px;
+    border: 1px solid #e6f7ff;
+}

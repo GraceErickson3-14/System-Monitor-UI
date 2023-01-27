@@ -1,0 +1,31 @@
+﻿body {
+}
+
+.header {
+    font-family: 'Montserrat', sans-serif;
+
+    text-align: center;
+    background-color: #8DA0CB;
+    padding: 20px;
+    font-size: 32px;
+    color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 100px;
+}
+
+nav a {
+    font-size: 14px;
+    padding: 10px;
+    transition: all 0.2s ease-in-out;
+ 
+    top: 0;
+}
+
+nav ul {
+    margin-top: 20px; 
+}
+nav a:hover {
+        color: blue;
+        text-decoration: underline;
+        transform: scale(1.1);
+    }
