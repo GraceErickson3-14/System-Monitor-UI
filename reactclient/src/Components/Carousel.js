@@ -1,4 +1,4 @@
-﻿
+
 import React, { Component } from 'react';
 import Slider from 'react-slick';
 import './Carousel.css';
@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
+
 import DetailedView from './DetailedView';
 
 
@@ -19,7 +20,6 @@ class Carousel extends Component {
     state = {
         machines: [],
         machineData: [],
-      
     };
 
    
@@ -30,7 +30,7 @@ class Carousel extends Component {
             const response = await axios.get(`http://localhost:5105/api/metrics`);
          
             machines = machines.concat(response.data);
-            
+        
             this.setState({ machines }, () => {
                 if (this.state.machines.length > 0) {
                     this.fetchMachineData();
@@ -56,7 +56,7 @@ class Carousel extends Component {
         }
     }
 
-  
+
     fetchMachineData = async () => {
         let machineData = [];
 
@@ -78,7 +78,7 @@ class Carousel extends Component {
 
 
     render() {
-       
+        
         const settings = {
            
             dots: true,
@@ -105,13 +105,15 @@ class Carousel extends Component {
        
                         <div key={index} className="slide">
 
-                            <Link to={`/detailed-view/${machine}`}>
-                                <button className="machine-button">
-                                    Machine: {machine}
-                                </button>
-                            </Link>
-                           
+                          
+                    <Link to={`/detailed-view/${machine}`}>
+                        <button className="machine-button">
+                             Machine: {machine}
+                        </button>
+                    </Link>
+                           <div className="barchart-container">
                             <BarChart machineData={this.state.machineData[index]} />
+                            </div>
                         </div>
                     ))}
                     </Slider>
