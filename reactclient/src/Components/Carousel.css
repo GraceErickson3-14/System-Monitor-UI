@@ -1,4 +1,4 @@
-﻿.carousel-container {
+.carousel-container {
     width: 800px;
 
     margin: 0 auto;
@@ -13,6 +13,11 @@
     align-items: center;
     justify-content: center;
 }
+
+.barchart-container {
+    padding: 10px;
+   
+  }
 
 .slick-prev:before,
 .slick-next:before {
