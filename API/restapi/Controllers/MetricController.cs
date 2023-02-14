@@ -5,6 +5,7 @@ using restapi.Models;
 using restapi.Repository;
 using restapi.Interface;
 
+
 namespace restapi.Controllers
 {
     [Route("api/[controller]")]
@@ -12,13 +13,13 @@ namespace restapi.Controllers
     public class MetricController : Controller // controller class that handle the http request
     {
         //readoly var which represent the Imongodbservice interface here, which will connect to specific function in mongodbservice
-        private readonly IMongoDBService _mongoDBService;
+        private readonly MongoDBService _mongoDBService;
         /// <summary>
         /// constructor
         /// pass the interface in, assign the interface to the readonly variable above.
         /// </summary>
         /// <param name="mongoDBService"></param>
-        public MetricController(IMongoDBService mongoDBService)
+        public MetricController(MongoDBService mongoDBService)
         {
             _mongoDBService = mongoDBService;
         }
@@ -62,6 +63,14 @@ namespace restapi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Metric metric) // accept user payload from the body
         {
+            if (metric.CPUUtilization.user + metric.CPUUtilization.Idle+ metric.CPUUtilization.System != (double)100)
+            {
+                return BadRequest("CPU utilization data is wrong, doesn't add up to 100%");
+            }
+            else if (metric.DiskUtilization.used + metric.DiskUtilization.Available != (double)100)
+            {
+                return BadRequest("Disk utilization data is wrong, Used and Available doesn't add up to 100%");
+            }
             await _mongoDBService.CreateAsync(metric);
             return CreatedAtAction(nameof(Get), new { id = metric.ID }, metric);
         }
