@@ -17,7 +17,6 @@ namespace restapi.Models
         public string? ID { get; set; }
 
         [Required(ErrorMessage = "datime type Timestap is required")]
-        [BsonDateTimeOptions(Representation = BsonType.Document)]
         //a timestamp of one specific document
         public DateTime Timestamp { get; set; }
 

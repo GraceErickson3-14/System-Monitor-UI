@@ -3,6 +3,14 @@ using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using restapi.Interface;
+using Microsoft.AspNetCore.Mvc;
+using CsvHelper;
+using static MongoDB.Driver.WriteConcern;
+using CsvHelper.Configuration;
+using System.Globalization;
+using System.Text;
+using DnsClient.Protocol;
+using System.Formats.Asn1;
 
 namespace restapi.Repository
 {
@@ -10,7 +18,7 @@ namespace restapi.Repository
     /// service provide for handle mongodb database
     /// needed to register in program.cs
     /// </summary>
-    public class MongoDBService:IMongoDBService
+    public class MongoDBService : IMongoDBService
     {
         //readoly var which represent metric collection in this class
         private readonly IMongoCollection<Metric> _metricCollection;
@@ -58,6 +66,42 @@ namespace restapi.Repository
         public async Task<Metric?> GetIdAsync(string id)
         {
             return await _metricCollection.Find(x => x.ID == id).FirstOrDefaultAsync();
+
+        }
+
+
+
+
+        /// <summary>
+        /// function to get data base on user input time
+        /// </summary>
+        /// <param name="upper"></param> is the boundary of time
+        /// <param name="down"></param> is the boundary of time
+        /// <returns></returns>
+        public async Task<List<Metric>> GetTimeAsync(DateTime upper, DateTime lower)
+        {
+            return await _metricCollection.Find(x => x.Timestamp <= upper && x.Timestamp >= lower).ToListAsync();
+        }
+
+
+        public void WriteCsvToMemory(List<Metric> target)
+        {
+            var csvConfig = new CsvConfiguration(CultureInfo.CurrentCulture)
+            {
+                HasHeaderRecord = true,
+                Delimiter = ",",
+                Encoding = Encoding.UTF8
+            };
+
+
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                using (TextWriter tw = new StreamWriter(memoryStream))
+                using (CsvWriter csv = new CsvWriter(tw, csvConfig))
+                {
+                    csv.WriteRecords(target);
+                }
+            }
 
         }
     }

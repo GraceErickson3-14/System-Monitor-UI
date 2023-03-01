@@ -4,7 +4,11 @@ using System;
 using restapi.Models;
 using restapi.Repository;
 using restapi.Interface;
-
+using System.IO;
+using CsvHelper.Configuration;
+using System.Globalization;
+using System.Text;
+using CsvHelper;
 
 namespace restapi.Controllers
 {
@@ -52,6 +56,46 @@ namespace restapi.Controllers
             }
 
             return target;
+        }
+
+        [HttpGet("record")]
+        public async Task<ActionResult<List<Metric>>> GetTime(DateTime upper, DateTime lower)
+        {
+            var target = await _mongoDBService.GetTimeAsync(upper, lower);
+
+            if (target is null)
+            {
+                return NotFound();
+            }
+
+            return target;
+        }
+
+        [HttpGet("csv")]
+        public async Task<FileResult> GetTimeCsv(DateTime upper, DateTime lower)
+        {
+            var target = await _mongoDBService.GetTimeAsync(upper, lower);
+
+            var csvConfig = new CsvConfiguration(CultureInfo.CurrentCulture)
+            {
+                HasHeaderRecord = true,
+                Delimiter = ",",
+                Encoding = Encoding.UTF8
+            };
+
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                using (TextWriter tw = new StreamWriter(memoryStream))
+                using (CsvWriter csv = new CsvWriter(tw, csvConfig))
+                {
+                    
+                    csv.WriteRecords(target);
+                    // memoryStream.Seek(0, SeekOrigin.Begin);
+                }
+
+                return File(memoryStream.ToArray(), "text/csv", "testname.csv");
+            }
+
         }
 
         /// <summary>

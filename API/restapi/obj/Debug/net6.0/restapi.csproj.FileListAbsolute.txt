@@ -41,3 +41,4 @@ D:\c++proj\repos\restapi\restapi\bin\Debug\net6.0\ZstdSharp.dll
 D:\c++proj\repos\restapi\restapi\bin\Debug\net6.0\runtimes\linux\native\libmongocrypt.so
 D:\c++proj\repos\restapi\restapi\bin\Debug\net6.0\runtimes\osx\native\libmongocrypt.dylib
 D:\c++proj\repos\restapi\restapi\bin\Debug\net6.0\runtimes\win\native\mongocrypt.dll
+D:\c++proj\repos\restapi\restapi\bin\Debug\net6.0\CsvHelper.dll

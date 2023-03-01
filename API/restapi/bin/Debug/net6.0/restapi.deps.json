@@ -8,11 +8,20 @@
     ".NETCoreApp,Version=v6.0": {
       "restapi/1.0.0": {
         "dependencies": {
+          "CsvHelper": "30.0.1",
           "MongoDB.Driver": "2.18.0",
           "Swashbuckle.AspNetCore": "6.2.3"
         },
         "runtime": {
           "restapi.dll": {}
+        }
+      },
+      "CsvHelper/30.0.1": {
+        "runtime": {
+          "lib/net6.0/CsvHelper.dll": {
+            "assemblyVersion": "30.0.0.0",
+            "fileVersion": "30.0.1.0"
+          }
         }
       },
       "DnsClient/1.6.1": {
@@ -189,6 +198,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "CsvHelper/30.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rcZtgbWR+As4G3Vpgx0AMNmShGuQLFjkHAPIIflzrfkJCx8/AOd4m96ZRmiU1Wi39qS5UVjV0P8qdgqOo5Cwyg==",
+      "path": "csvhelper/30.0.1",
+      "hashPath": "csvhelper.30.0.1.nupkg.sha512"
     },
     "DnsClient/1.6.1": {
       "type": "package",
