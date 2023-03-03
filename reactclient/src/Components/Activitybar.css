@@ -1,0 +1,37 @@
+.Activitybar-container {
+    position: relative;
+    height: 719px;
+    overflow: hidden;
+  }
+  
+  .Activitybar {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    margin-bottom: -20px;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    transition: box-shadow 0.2s ease-out;
+    width: 45%;
+   
+   
+  }
+
+
+  
+  .Activitybar.scroll {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .Activitybar-notifications {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    padding-top: 10px;
+  }
+
+  
