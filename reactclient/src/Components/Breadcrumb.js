@@ -5,15 +5,15 @@ import { Link } from 'react-router-dom';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Chip from '@mui/material/Chip';
 import HomeIcon from '@mui/icons-material/Home';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 import { useLocation } from 'react-router-dom';
 
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
     theme.palette.mode === 'light'
-      ? theme.palette.grey[100]
-      : theme.palette.grey[800];
+    ? '#e6e6fa'
+    : theme.palette.grey[800];
   return {
     backgroundColor,
     height: theme.spacing(3),
