@@ -1,10 +1,14 @@
 .App {
-    text-align: center;
-    position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;    
 }
 
 body {
-    background-color: #E6F2FF;
+    height: 100vh;
+    background: rgb(255, 255, 255);
 }
 
 
@@ -35,14 +39,11 @@ body {
 }
 
 .center-div {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  align-content: center;
+  justify-content: space-between; 
+
 }
+
 
 @keyframes App-logo-spin {
   from {
