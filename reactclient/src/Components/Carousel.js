@@ -10,19 +10,15 @@ import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
-
+import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
 import DetailedView from './DetailedView';
-
-
 
 class Carousel extends Component {
     state = {
         machines: [],
         machineData: [],
     };
-
-   
 
     fetchMachineId = async () => {
         let machines = [];
@@ -42,8 +38,6 @@ class Carousel extends Component {
         }
     }
 
-
-
     async componentDidMount() {
     
         try {
@@ -55,7 +49,6 @@ class Carousel extends Component {
             console.log(error);
         }
     }
-
 
     fetchMachineData = async () => {
         let machineData = [];
@@ -76,11 +69,8 @@ class Carousel extends Component {
         }
     }
 
-
     render() {
-        
         const settings = {
-           
             dots: true,
             infinite: true,
             arrow: true,
@@ -94,37 +84,37 @@ class Carousel extends Component {
             return null;
         }
 
-        
-
         return (
-             <div>
+       
+        <div style={{ paddingTop: '150px'}}>
             <div className="carousel-container">
-            
                 <Slider {...settings}>
                     {this.state.machines.map((machine,index) => (
        
-                        <div key={index} className="slide">
-
-                          
+                        <div key={index} className="slide">    
                     <Link to={`/detailed-view/${machine}`}>
                         <button className="machine-button">
                              Machine: {machine}
                         </button>
                     </Link>
                            <div className="barchart-container">
-                            <BarChart machineData={this.state.machineData[index]} />
+                        <Box sx={{ boxShadow: '0px 10px 5px 0px rgba(0,0,0,0.25)' }}>
+                            <BarChart sx={{ boxShadow: '0px 10px 5px 0px rgba(0,0,0,0.25)' }} labels={['User', 'System', 'Idle']} data={this.state.machineData[index]}/>
+
+                            </Box>
                             </div>
                         </div>
                     ))}
                     </Slider>
 
             </div>
-                            <div>
+                <Box sx={{marginLeft:"580px", marginTop:"150px"}}>
                     <button className="myButton">Add new machine</button>
-                </div>
+                </Box>
             </div>
         );
      }
+    
 
 }
 
