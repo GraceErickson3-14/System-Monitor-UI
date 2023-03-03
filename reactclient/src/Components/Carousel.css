@@ -1,9 +1,10 @@
 .carousel-container {
     width: 800px;
-
+    
     margin: 0 auto;
     border: 30px solid #8DA0CB;
     box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.25);
+    margin-top: 40px;
 }
 
 .slick-slide {
@@ -16,12 +17,18 @@
 
 .barchart-container {
     padding: 10px;
+
    
   }
 
 .slick-prev:before,
 .slick-next:before {
     color: #333;
+}
+
+.carousel-comp {
+    height: 300px; /* or any desired height */
+    overflow-y: scroll; /* enable vertical scroll */
 }
 
 .machine-button {
@@ -36,24 +43,36 @@
 }
 
 .myButton {
-    position: absolute;
-    bottom:-150px;
-    left: 50%;
-    transform: translateX(-50%);
+
     background-color: #34495E;
     color: white;
     font-size: 20px;
     padding: 12px 30px;
-    border-radius: 5px;
+    border-radius: 10px;
     border: none;
     cursor: pointer;
     font-weight: bold;
     box-shadow: 0px 5px 10px #888888;
+
+      /* Animation */
+  animation-name: bounce;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
+
+@keyframes bounce {
+    from {
+      transform: translateY(0px);
+    }
+    to {
+      transform: translateY(-1px);
+    }
+  }
 
 
 .slick-dots {
-    bottom: -30px;
+    bottom: -30px
 }
 
  .slick-dots li button:before {
