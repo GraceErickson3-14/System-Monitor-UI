@@ -65,7 +65,7 @@ namespace restapi.Repository
         /// <returns></returns>
         public async Task<Metric?> GetIdAsync(string id)
         {
-            return await _metricCollection.Find(x => x.ID == id).FirstOrDefaultAsync();
+            return await _metricCollection.Find(x => x.IpAddress == id).FirstOrDefaultAsync();
 
         }
 

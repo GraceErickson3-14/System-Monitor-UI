@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace restapi.Models
@@ -10,63 +11,52 @@ namespace restapi.Models
     /// </summary>
     public class Metric
     {
-        [Required]
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)] // allow passing the parameter as type string instead of an ObjectId
-        // ID is the unique ID to identify the document in the collection, matches the _id in database
-        public string? ID { get; set; }
-
-        [Required(ErrorMessage = "datime type Timestap is required")]
-        //a timestamp of one specific document
+        public string IpAddress { get; set; }
         public DateTime Timestamp { get; set; }
-
-        //the CPU utilization which is stored as object in database
-        [Required]
-        public CPUUtilization CPUUtilization { get; set; }
-        [Required]
-        public string IPAddress { get; set; }
-        [Required]
-        public string MACAddress { get; set; }
-        [Required]
-        public MemUsage MemUsage { get; set; }
-        [Required]
-        public DiskUtilization DiskUtilization { get; set; }
+        public CPU CPU { get; set; }
+        public Memory Memory { get; set; }
+        public Disk Disk { get; set; }
 
     }
 
-    /// <summary>
-    /// Object is handle with class
-    /// In this case,the cpu utilization object is handled, 
-    /// along with three fields that is held inside of the object
-    /// </summary>
-    public class CPUUtilization
+    public class CPU
     {
-        [Required(ErrorMessage = "double type user is required")]
-        public double user { get; set; } //cpu used by user
-        [Required(ErrorMessage = "double type System is required")]
-        public double System { get; set; }//cpu used by system
-        [Required(ErrorMessage = "double type Idle is required")]
-        public double Idle { get; set; }//cpu used by Idle
+        public CPU_Utilization Utilization { get; set; }
     }
 
-    public class MemUsage
+    public class CPU_Utilization
     {
-        [Required(ErrorMessage = "double type GbUsed is required")]
-        public double GbUsed { get; set; }
-        [Required(ErrorMessage = "double type AvaMem is required")]
-        public double AvaMem { get; set; }
+        public double User { get; set; }
+        public double System { get; set; }
+        public double Idle { get; set; }
     }
 
-    public class DiskUtilization
+    public class Memory
     {
-        [Required(ErrorMessage = "double type used is required")]
-        public double used { get; set; }
-        [Required(ErrorMessage = "double type Available is required")]
+        public Usage Usage { get; set; }
+    }
+
+    public class Usage
+    {
+        public double GigabytesUsed { get; set; }
+        public double AvailableMemory { get; set; }
+    }
+
+    public class Disk
+    {
+        public Disk_Utilization Utilization { get; set; }
+        public int NumberOfOperations { get; set; }
+        public double Latency { get; set; }
+    }
+
+    public class Disk_Utilization
+    {
+        public double Used { get; set; }
         public double Available { get; set; }
-        [Required(ErrorMessage = "int type NumOperation is required")]
-        public int NumOperation { get; set; }
-        [Required(ErrorMessage = "double type DiskLatency is required")]
-        public double DiskLatency { get; set; }
     }
+
+ 
+
 
 }

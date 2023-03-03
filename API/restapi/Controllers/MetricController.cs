@@ -107,16 +107,16 @@ namespace restapi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Metric metric) // accept user payload from the body
         {
-            if (metric.CPUUtilization.user + metric.CPUUtilization.Idle+ metric.CPUUtilization.System != (double)100)
+            if (metric.CPU.Utilization.User + metric.CPU.Utilization.Idle+ metric.CPU.Utilization.System != (double)100)
             {
                 return BadRequest("CPU utilization data is wrong, doesn't add up to 100%");
             }
-            else if (metric.DiskUtilization.used + metric.DiskUtilization.Available != (double)100)
+            else if (metric.Disk.Utilization.Used + metric.Disk.Utilization.Available != (double)100)
             {
                 return BadRequest("Disk utilization data is wrong, Used and Available doesn't add up to 100%");
             }
             await _mongoDBService.CreateAsync(metric);
-            return CreatedAtAction(nameof(Get), new { id = metric.ID }, metric);
+            return CreatedAtAction(nameof(Get), new { id = metric.IpAddress }, metric);
         }
 
        
