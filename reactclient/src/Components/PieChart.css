@@ -1,0 +1,16 @@
+.pie-chart {
+    background-color: #FFFFFF;
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
+
+    border-radius: 10px;
+
+  }
+  
+  @media (min-width: 768px) {
+    .pie-chart {
+      max-width: 600px;
+    }
+  }
+  
