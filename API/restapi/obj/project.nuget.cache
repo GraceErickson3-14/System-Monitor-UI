@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "GAKniC8a8A8TNolw9E53FypYVLDOjO8BPYfNDYDqr8yF7GCJvNaYyNaeshbV3Mx3vMoPGS7EDKl06gwXUIKJSw==",
+  "dgSpecHash": "szLo2//VlZt2hth5858C4aEKI+bKyIikB+CIPykCL6/J+vf/Du+OgUoevPAanw6Z69pTSccmv9SGWKkykBq9wA==",
   "success": true,
   "projectFilePath": "D:\\c++proj\\repos\\restapi\\restapi\\restapi.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\chang\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\2.0.0\\microsoft.extensions.logging.abstractions.2.0.0.nupkg.sha512",
     "C:\\Users\\chang\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "C:\\Users\\chang\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\chang\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.17.0\\microsoft.visualstudio.azure.containers.tools.targets.1.17.0.nupkg.sha512",
     "C:\\Users\\chang\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
     "C:\\Users\\chang\\.nuget\\packages\\mongodb.bson\\2.18.0\\mongodb.bson.2.18.0.nupkg.sha512",
     "C:\\Users\\chang\\.nuget\\packages\\mongodb.driver\\2.18.0\\mongodb.driver.2.18.0.nupkg.sha512",

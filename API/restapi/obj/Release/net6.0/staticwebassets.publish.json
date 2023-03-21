@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "4SdrWV7RY9SAdVq241gSHABXC6HYqtCSQTP1k93t6Kk=",
+  "Source": "restapi",
+  "BasePath": "_content/restapi",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
