@@ -14,15 +14,10 @@ namespace restapi.Models
         [BsonId]
         public string IpAddress { get; set; }
         public DateTime Timestamp { get; set; }
-        public CPU CPU { get; set; }
-        public Memory Memory { get; set; }
-        public Disk Disk { get; set; }
+        public CPU_Utilization CPU_Utilization { get; set; }
+        public Memory_Usage Memory_Usage { get; set; }
+        public Disk[] Disk { get; set; }
 
-    }
-
-    public class CPU
-    {
-        public CPU_Utilization Utilization { get; set; }
     }
 
     public class CPU_Utilization
@@ -32,12 +27,7 @@ namespace restapi.Models
         public double Idle { get; set; }
     }
 
-    public class Memory
-    {
-        public Usage Usage { get; set; }
-    }
-
-    public class Usage
+    public class Memory_Usage
     {
         public double GigabytesUsed { get; set; }
         public double AvailableMemory { get; set; }
@@ -45,9 +35,10 @@ namespace restapi.Models
 
     public class Disk
     {
-        public Disk_Utilization Utilization { get; set; }
+        public string DiskName { get; set; }
         public int NumberOfOperations { get; set; }
         public double Latency { get; set; }
+        public Disk_Utilization Disk_Utilization { get; set; }
     }
 
     public class Disk_Utilization

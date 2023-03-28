@@ -9,6 +9,10 @@ using CsvHelper.Configuration;
 using System.Globalization;
 using System.Text;
 using CsvHelper;
+using SharpCompress.Writers;
+using DnsClient.Protocol;
+using static restapi.Repository.MongoDBService;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace restapi.Controllers
 {
@@ -88,9 +92,27 @@ namespace restapi.Controllers
                 using (TextWriter tw = new StreamWriter(memoryStream))
                 using (CsvWriter csv = new CsvWriter(tw, csvConfig))
                 {
-                    
-                    csv.WriteRecords(target);
-                    // memoryStream.Seek(0, SeekOrigin.Begin);
+
+                    csv.Context.RegisterClassMap<MetricMap>();
+                    csv.Context.RegisterClassMap<DiskMap>();
+
+                    csv.WriteHeader<Metric>();
+                    csv.WriteHeader<Disk>();
+                    csv.NextRecord();
+
+                    foreach(var data in target)
+                    {
+                        foreach (var diskData in data.Disk)
+                        {
+                            csv.WriteRecord(data);
+                            csv.WriteRecord(diskData);
+
+                            csv.NextRecord();
+                        }
+                    }
+
+
+
                 }
 
                 return File(memoryStream.ToArray(), "text/csv", "testname.csv");
@@ -107,14 +129,22 @@ namespace restapi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Metric metric) // accept user payload from the body
         {
-            if (metric.CPU.Utilization.User + metric.CPU.Utilization.Idle+ metric.CPU.Utilization.System != (double)100)
+            if (metric.CPU_Utilization.User + metric.CPU_Utilization.Idle+ metric.CPU_Utilization.System != (double)100)
             {
                 return BadRequest("CPU utilization data is wrong, doesn't add up to 100%");
             }
-            else if (metric.Disk.Utilization.Used + metric.Disk.Utilization.Available != (double)100)
+
+            foreach(var disk in metric.Disk)
+            {
+                if (disk.Disk_Utilization.Used + disk.Disk_Utilization.Available != (double)100)
+                {
+                    return BadRequest("Disk utilization data is wrong, Used and Available doesn't add up to 100%");
+                }
+            }
+            /*else if (metric.Disk.Utilization.Used + metric.Disk.Utilization.Available != (double)100)
             {
                 return BadRequest("Disk utilization data is wrong, Used and Available doesn't add up to 100%");
-            }
+            }*/
             await _mongoDBService.CreateAsync(metric);
             return CreatedAtAction(nameof(Get), new { id = metric.IpAddress }, metric);
         }

@@ -104,5 +104,64 @@ namespace restapi.Repository
             }
 
         }
+
+
+
+
+        public sealed class MetricMap : ClassMap<Metric>
+        {
+            public MetricMap()
+            {
+                Map(m => m.IpAddress).Name("IpAddress");
+                Map(m => m.Timestamp).Name("Timestamp");
+                References<CPUMap>(m => m.CPU_Utilization);
+                References<MemMap>(m => m.Memory_Usage);
+            }
+
+
+        }
+        public sealed class CPUMap : ClassMap<CPU_Utilization>
+        {
+            public CPUMap()
+            {
+                Map(m => m.User).Name("User");
+                Map(m => m.System).Name("System");
+                Map(m => m.Idle).Name("Idle");
+            }
+        }
+
+
+        public sealed class MemMap : ClassMap<Memory_Usage>
+        {
+            public MemMap()
+            {
+                Map(m => m.GigabytesUsed);
+                Map(m => m.AvailableMemory);
+            }
+
+
+        }
+        public sealed class DiskMap : ClassMap<Disk>
+        {
+            public DiskMap()
+            {
+                Map(m => m.DiskName).Name("DiskName");
+                Map(m => m.NumberOfOperations).Name("NumberOfOperations");
+                Map(m => m.Latency).Name("Latency");
+                References<DiskUseMap>(m => m.Disk_Utilization);
+            }
+
+
+        }
+        public sealed class DiskUseMap : ClassMap<Disk_Utilization>
+        {
+            public DiskUseMap()
+            {
+                Map(m => m.Used).Name("Used_Space");
+                Map(m => m.Available).Name("Available_Space");
+            }
+
+
+        }
     }
 }
