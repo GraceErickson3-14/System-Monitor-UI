@@ -39,12 +39,12 @@ public class windowsCpuCstate
 
 public class windowsCsPhysicalMemorybyte
 {
-    public double Value { get; set; }
+    public string Value { get; set; }
 }
 
 public class windowsOSVirtual
 {
-    public double value { get; set; }
+    public string value { get; set; }
 }
 
 
