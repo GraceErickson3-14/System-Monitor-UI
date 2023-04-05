@@ -1,25 +1,42 @@
+
+
+
 .header {
-    
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 140px; 
-    z-index: 1;
-    background-color:  rgb(255, 255, 255);
-    transition: box-shadow 0.2s ease-out;
-    border-bottom: 1px solid rgb(255, 252, 252);
- 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 140px; 
+  z-index: 1;
+  background-color:  rgb(255, 255, 255);
+  transition: box-shadow 0.2s ease-out, height 0.2s ease-out;
+  border-bottom: 1px solid rgb(255, 252, 252);
 }
+
+.header.scroll {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  height: 50px;
+}
+
 
 img {
     width: 130px;
     height: 130px;
   }
 
-.header.scroll {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  .header.scroll img {
+    width: 0px;
+    height: 0px;
+    margin-bottom: 20px;
+  }
+
+
+.header.scroll + .abox {
+  margin-bottom: 20px;
+  margin-left: 20px;
 }
+
 
 hr {
     height: 2px;
@@ -28,5 +45,53 @@ hr {
     border-color: grey;
 
   }
+
+  .header.scroll hr {
+    height: 2px;
+    margin-top: -15px;
+    display: none;
+    border-color:black;
+  }
+  
+  .breadcrumb-box {
+    justify-content: flex-start;
+    margin-top: -10px;
+    margin-left: 20px;
+    margin-bottom: 15px;
+    height: 15px;
+    width: 30%;
+   
+  }
   
 
+
+  .abox {
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+
+    width: 400px;
+    margin-Top: 150px;
+  }
+  
+  
+  .header.scroll .abox {
+    margin-top: 100px;
+
+  }
+  
+  .abox > div:first-child {
+    margin-right: 40px;
+    margin-top: -90px;
+
+
+  }
+  
+  .abox > div:last-child {
+    margin-bottom: 20px;
+    margin-right: 60px;
+    margin-top: -95px;
+  
+  }
+  
