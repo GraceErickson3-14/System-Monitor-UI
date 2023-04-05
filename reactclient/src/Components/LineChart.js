@@ -1,47 +1,79 @@
-import React from 'react';
 import { Chart as ChartJS, LineElement, PointElement, LinearScale, CategoryScale } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import React from 'react';
 import './LineChart.css';
+import {ReportProblemIcon as Icon} from '@mui/icons-material/ReportProblem';
 
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale);
 
-class LineChart extends React.Component {
-  state = {
-    chartData: {
-      labels: ['9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm'],
-      datasets: [
-        {
-          label: 'CPU',
-          data: [65, 59, 80, 81, 56, 55, 40, 59, 80, 81, 56, 55],
-          fill: false,
-          borderColor: ['rgba(30, 136, 229, 0.85)'],
-          tension: 0.1,
-        },
-        {
-          label: 'Memory',
-          data: [28, 48, 40, 19, 86, 27, 90, 80, 45, 20, 60, 25],
-          fill: false,
-          borderColor: ['rgba(144, 202, 249'],
-        },
-        {
-          label: 'Disk',
-          data: [50, 20, 40, 19, 10, 50, 12, 10, 45, 20, 52, 9],
-          fill: false,
-          borderColor: [ 'rgba(103, 58, 183, 0.85)'],
-        },
-      ],
-    },
-  };
+const pointImage = new Image();
+pointImage.src = "https://www.freeiconspng.com/thumbs/warning-icon-png/status-warning-icon-png-29.png";
 
+
+class LineChart extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log("props:", props);
+    this.state = {
+      chartData: {
+        labels: this.props.labels,
+        datasets: [
+          {
+            label: 'Utilization',
+            data: this.props.data,
+            backgroundColor: ['rgba(30, 136, 229, 0.85)',
+                              'rgba(144, 202, 249)',
+                              'rgba(103, 58, 183, 0.85)'],
+            pointStyle: this.props.data.map((point) => {
+                    if (point >= this.props.threshold) {
+                                  const canvas = document.createElement('canvas');
+                                  canvas.width = 25;
+                                  canvas.height = 25;
+                                  const ctx = canvas.getContext('2d');
+                                  ctx.drawImage(pointImage, 0, 0, 25, 25);
+                                  return canvas;
+                                } else {
+                                  return 'circle';
+                                }
+                              }),
+          },
+        ],
+      },
+    };
+  }
   shouldComponentUpdate(nextProps, nextState) {
-    // Compare the current props and state to the next props and state
     if (
-      this.props.machineData === nextProps.machineData &&
-      this.state.chartData === nextState.chartData
+      this.props.labels === nextProps.labels &&
+      this.props.data === nextProps.data &&
+      this.props.threshold === nextProps.threshold &&
+      JSON.stringify(this.state.chartData.datasets) === JSON.stringify(nextState.chartData.datasets)
     ) {
       return false;
     }
     return true;
+  }
+  
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.threshold !== this.props.threshold || prevProps.data !== this.props.data) {
+      this.setState({
+        chartData: {
+          labels: this.props.labels,
+          datasets: [
+            {
+              label: 'Utilization',
+              data: this.props.data,
+              backgroundColor: ['rgba(30, 136, 229, 0.85)',
+                                'rgba(144, 202, 249)',
+                                'rgba(103, 58, 183, 0.85)'],
+              pointStyle: this.props.data.map((point) => {
+                return point >= this.props.threshold ? 'triangle' : 'circle';
+              }),
+            },
+          ],
+        },
+      });
+    }
   }
 
   render() {
@@ -55,6 +87,12 @@ class LineChart extends React.Component {
               display: true,
               fontSize: 25,
             },
+            elements:{
+              point:{
+                pointStyle: pointImage
+              }
+
+            },
             legend: {
               display: true,
               position: 'right',
@@ -66,7 +104,6 @@ class LineChart extends React.Component {
                 },
               },
             },
-           
           }}
         />
       </div>
