@@ -24,7 +24,8 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto", 
+    color: '#6c737f',
   },
 });
 
