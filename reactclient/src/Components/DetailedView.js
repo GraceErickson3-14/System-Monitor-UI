@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './DetailedView.css';
@@ -13,6 +13,9 @@ import { Paper, Grid } from '@mui/material';
 import Activitybar  from './Activitybar';
 import Skeleton from '@mui/material/Skeleton';
 import Tabys from "./Tab";
+import SkeletonDetailedView from './SkeletonDetailedView';
+import ExceededThresholdMessagesList from "./AlertsList";
+import MetricCard from './MetricCard';
 
 
 
@@ -22,6 +25,8 @@ const DetailedView = () => {
   const [cpuData, setCpuData] = useState({});
   const [diskData, setDiskData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [cpuThreshold, setCpuThreshold] = useState(80);
+const [cpuThresholdError, setCpuThresholdError] = useState(false);
   
   let Memory = {};
   let CPU = {};
@@ -34,7 +39,7 @@ const DetailedView = () => {
       const response = await axios.get(`http://localhost:5105/api/metrics/${machine}`);
       CPU = response.data.cpu;
       setCpuData(CPU);
-      console.log(CPU);
+      console.log("CPU",CPU);
 
       Disk = response.data.disk;
       setDiskData(Disk);
@@ -52,7 +57,7 @@ const DetailedView = () => {
     
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 1000);
   }, []);
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -64,20 +69,15 @@ const DetailedView = () => {
     margin: '10px 0',
   }));
   
+  const messages = [
+    { id: 1, content: "Message 1", read: false },
+    { id: 2, content: "Message 2", read: false },
+    { id: 3, content: "Message 3", read: false },
+  ];
   return (
     <div className="comp">
       {isLoading ? (
-      <div>
-   <div style={{ display: 'flex', flexDirection: 'row', marginLeft: '50px' }}>
-  <div style={{ display: 'flex', flexDirection: 'column' }}>
-    <Skeleton variant="rect" sx={{ width: 700, height: 350, borderRadius: '20px', marginBottom: '20px' }}/>
-    <Skeleton variant="rect" sx={{ width: 700, height: 350, borderRadius: '20px' }}/>
-  </div>
-  <Skeleton variant="rect" sx={{ width: 600, height: 720, borderRadius: '20px', marginBottom:"20px", marginLeft:"30px"}}/>
-</div>
-<Skeleton variant="rect" sx={{ width: 1300, height: 350, borderRadius: '20px', marginBottom: '10px', marginLeft:"60px",}}/>
-
-    </div>
+      <SkeletonDetailedView/>
       ) : (
         <Container maxWidth="xl" sx={{ margin: 'auto' }}>
 
@@ -86,9 +86,26 @@ const DetailedView = () => {
             
             {/* Grid for page begins*/}
             <Grid container spacing={2}>
+                     {/* VIOLATIONS/Alerts*/}
+               <Grid item xs={24} md={12}>
+                <Item className="section">
+                  <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft:"20px",marginTop:"10px"}}>
+                    <h3>Thresholds for {machine}</h3>
+                  </Box>
+                
+                    <hr className='hr_dude'></hr>
+                  <Box sx={{marginLeft:"50px"}}>
+                    
+                 
+                 <MetricCard />
+                 
+             
+                  </Box>
+                </Item>
+              </Grid>
 
                 {/*Grid containing memory and CPU Begin*/}
-  {/*-----------------------------------------------------------------------*/}
+  {/*------------------------------------------------------------------------------------*/}
               <Grid item xs={10} md={6} direction="column">
                 {/* Memory */}
                 <Item className="section">
@@ -118,7 +135,7 @@ const DetailedView = () => {
                       </Grid>
                       <Grid item xs={8}>
                         <Box sx={{marginLeft:"26px"}}>
-                          <LineChart/>
+                          <LineChart labels={['9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm']} data={[28, 48, 40, 19, 86, 27, 90, 80, 45]}/>
                           <Box sx={{paddingLeft:'170px', marginTop:"-28px"}} >
                             <h6>Utilization over time</h6>
                           </Box>
@@ -145,7 +162,7 @@ const DetailedView = () => {
                     <Grid container spacing={2}>
                       <Grid item xs={4}>
                         <Box sx={{paddingTop:'25px'}}>
-                        <PieChart/>
+                        <PieChart labels={['User', 'System', 'Idle']} data= {[30, 50, 20]}/>
                         </Box>
                         <Box sx={{ marginTop:"15px", marginLeft:"40px"}}>
                         <h6>Average Utilization </h6>
@@ -153,7 +170,7 @@ const DetailedView = () => {
 
                       </Grid>
                       <Grid item xs={8}>
-                        <LineChart/>
+                        <LineChart labels={['9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm']} data={[50, 48, 5, 30, 86, 0, 5, 20, 45]} threshold={50}/>
                         <Box sx={{paddingLeft:'150px', marginTop:"-28px"}} >
                           <h6>Utilization over time</h6>
                         </Box>
@@ -169,7 +186,7 @@ const DetailedView = () => {
               {/* Activity bar*/}
               <Grid item xs={13} md={6}>
                 <Item>
-                  <Activitybar /> 
+                  <Activitybar/> 
                 </Item>
               </Grid>
             
@@ -188,21 +205,21 @@ const DetailedView = () => {
                   <Box sx={{marginLeft:"50px"}}>
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={4}>
-                      <LineChart/>
+                      <LineChart labels={['9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm']} data={[28, 48, 40, 19, 86, 27, 90, 80, 45]}/>
                       <Box sx={{ marginLeft:"150px",marginTop:"28px"}} >
-                          <h6>Available Space</h6>
+                          <h6>Latency</h6>
                         </Box>
                     </Grid>
                     <Grid item xs={5} md={2.5}>
-                      <PieChart/>
+                      <PieChart labels={['Used', 'Available']} data= {[80, 20]}/>
                       <Box sx={{ marginLeft:"70px",marginTop:"28px"}} >
                           <h6>Available Space</h6>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                      <BarChart/>
+                      <BarChart labels={['Operations']} data= {[150]}/>
                       <Box sx={{ marginLeft:"160px",marginTop:"50px"}} >
-                          <h6>Available Space</h6>
+                          <h6>Total Operations</h6>
                         </Box>
                     </Grid>
                   </Grid>
