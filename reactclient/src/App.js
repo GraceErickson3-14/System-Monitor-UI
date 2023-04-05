@@ -1,36 +1,28 @@
-
 import React, { Component } from "react";
-import { useState } from 'react';
-
 import "./App.css";
-import Carousel from "./Components/Carousel";
 import Header from "./Components/Header";
-import { BrowserRouter as Router, Route,Routes, Switch, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Switch, Link } from 'react-router-dom';
 import DetailedView from "./Components/DetailedView";
-import Container from '@mui/material/Container';
-
+import Picture from "./Components/Picture";
+import AddMachine from "./Components/AddMachine";
+import Reports from "./Components/Reports";
 
 function App() {
-    const [machine, setMachine] = useState('');
-
- 
 
     return (
-        <div>
-      
         <Router>
-                <Header />
-                <div >
-                <Routes>
-                        <Route path="/" element={<Carousel  />} />
-                        <Route path="/detailed-view/:machine" element={ <DetailedView />} />
-                </Routes>
-            </div>
+          <Header />
+     
+            <Routes>
+              <Route path="/" element={<Picture />} />
+              <Route path="/detailed-view/:machine" element={<DetailedView />} />
+              <Route path="/add-machine" element={<AddMachine />} />
+              <Route path="/reports" element={<Reports />} />
+    
+            </Routes>
+        
         </Router>
-      
-        </div>
-    );
-}
+      );
+    }
 
 export default App;
-
