@@ -11,6 +11,9 @@ import logo from './VitalviewLogo.png';
 
 
 
+
+
+
 const theme = createTheme({
     palette: {
       primary: {
@@ -47,20 +50,20 @@ const theme = createTheme({
          <img src={logo} alt="Logo" />
       </Box>
 
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end'}}>
-       <div style={{ marginRight: '40px', marginTop:'-90px' }}>
-            {/*<Badge/>*/}
+      <Box className="abox" sx={{  justifyContent: 'flex-end'}}>
+       <div >
+       <Badge/>
        </div >
 
-       <div style={{ marginBottom: '20px', marginRight: "60px", marginTop:'-95px'}}>
-               {/*<Avatar/>*/}
+       <div >
+       <Avatar/>
        </div>
    
        </Box>
 
        <hr></hr>
       
-       <Box sx={{ justifyContent: 'flex-start', marginTop: '-10px', marginLeft: '20px', marginBottom: '15px', height: '15px', width: '30%' }}>
+       <Box className="breadcrumb-box">
   <Breadcrumb />
 </Box>
 
