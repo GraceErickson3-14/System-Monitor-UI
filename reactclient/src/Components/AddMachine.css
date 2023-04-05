@@ -1,0 +1,17 @@
+
+  .container_box{
+    background-color: #EEF2F6;
+    width: 100%;
+    height: 1700px;
+    min-height: 80vh;
+    padding: 1rem;
+    max-width: 98vw; /* Adjust to desired width */
+    margin: auto;
+    border-radius: 10px;
+  }
+  .comp{
+    margin-top: 151px;
+    width: 100%;
+   
+
+  }
