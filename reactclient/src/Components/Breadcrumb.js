@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Chip from '@mui/material/Chip';
 import HomeIcon from '@mui/icons-material/Home';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 import { useLocation } from 'react-router-dom';
 
@@ -39,7 +42,7 @@ function handleClick(event) {
     const { pathname } = useLocation();
     let breadcrumb;
 
-    if (pathname.includes("/detailed-view")) {
+     if (pathname.includes("/detailed-view")) {
       breadcrumb = (
         <Breadcrumbs>
           <StyledBreadcrumb
@@ -48,10 +51,37 @@ function handleClick(event) {
             label="Home"
             icon={<HomeIcon fontSize="small" />}
           />
-          <StyledBreadcrumb component="a" href="/detailed-view" label="Detailed View" />
+          <StyledBreadcrumb component="a" href="/detailed-view" label="Detailed View" icon={<QueryStatsIcon fontSize='small'/>} />
         </Breadcrumbs>
       );
-    } else {
+    } else if(pathname.includes("/reports")) {
+      breadcrumb = (
+        <Breadcrumbs>
+          <StyledBreadcrumb
+            component={Link}
+            to="/"
+            label="Home"
+            icon={<HomeIcon fontSize="small" />}
+          />
+          <StyledBreadcrumb component="a" href="/reports" label="Reports" icon={<AssessmentIcon fontSize='small'/>} />
+        </Breadcrumbs>
+      );
+
+    } else if(pathname.includes("/add-machine")) {
+      breadcrumb = (
+        <Breadcrumbs>
+          <StyledBreadcrumb
+            component={Link}
+            to="/"
+            label="Home"
+            icon={<HomeIcon fontSize="small" />}
+          />
+          <StyledBreadcrumb component="a" href="/add-machine" label="Add Machine" icon={<AddBoxIcon fontSize='small'/>} />
+        </Breadcrumbs>
+      );
+
+    }
+    else {
       breadcrumb = (
         <Breadcrumbs>
           <StyledBreadcrumb
