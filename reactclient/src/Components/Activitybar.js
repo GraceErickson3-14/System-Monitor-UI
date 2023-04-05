@@ -8,6 +8,8 @@ import Divider from '@mui/material/Divider';
 import "./Activitybar.css";
 import LineChart from './LineChart';
 import Chip from '@mui/material/Chip';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 const Activitybar = () => {
   const [notifications, setNotifications] = useState([]);
@@ -19,7 +21,7 @@ const Activitybar = () => {
       const value = Math.floor(Math.random() * 100);
       const message = `The ${type} usage is at ${value}%`;
       setNotifications((notifications) => [...notifications, { message, time: new Date(), type, value }]);
-    }, 10000);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -42,31 +44,20 @@ const Activitybar = () => {
    
         <Box sx={{width:'80%', height:'200px', display: 'flex',justifyContent: 'center', marginLeft:'60px'}}>
           <div style={{width:'80%', height:'70%', PaddingTop: "-10px", marginTop: "-10px"}}>
-            <LineChart />
+            <LineChart  labels={['9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm']} data={[28, 20, 40, 19, 20, 27, 10, 30, 90]}  />
           </div>
         </Box>
       </Box>
 
-      <hr style={{ zIndex: 1, paddingTop: "40px", border: "none", borderBottom: "3px solid #808080" }} />
+      <hr style={{ zIndex: 1, paddingTop: "50px", border: "none", borderBottom: "3px solid #808080" }} />
 
-      <List sx={{ overflow: 'auto', maxHeight: '400px' }}>
+      <Stack sx={{ width: '100%', overflowY: 'scroll', maxHeight:"400px" }} spacing={2}>
         {notifications.map((notification, index) => (
           <React.Fragment key={index}>
-            <ListItem alignItems="flex-start">
-              <ListItemText
-                primaryTypographyProps={{ variant: 'subtitle1', fontWeight: 'bold' }}
-                primary={notification.message}
-                secondaryTypographyProps={{ variant: 'caption', color: 'textSecondary' }}
-                secondary={notification.time.toLocaleString()}
-              />
-              <Box sx ={{marginRight: "30px", marginTop: "15px"}}>
-              <Chip label={`${notification.value}%`} color={getChipColor(notification.value)} />
-              </Box>
-            </ListItem>
-            {index < notifications.length - 1 && <Divider variant="inset" component="li" sx={{ marginLeft: '-20px' }} />}
+            <Alert severity={getChipColor(notification.value)}>{notification.message} - {notification.time.toLocaleString()}</Alert>
           </React.Fragment>
         ))}
-      </List>
+      </Stack>
     </div>
   );
 };
