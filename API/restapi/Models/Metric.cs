@@ -12,7 +12,7 @@ namespace restapi.Models
     public class Metric
     {
         [BsonId]
-        public string IpAddress { get; set; }
+        public string? IpAddress { get; set; }
         public DateTime Timestamp { get; set; }
         public CPU_Utilization CPU_Utilization { get; set; }
         public Memory_Usage Memory_Usage { get; set; }

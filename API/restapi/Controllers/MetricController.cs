@@ -149,6 +149,47 @@ namespace restapi.Controllers
             return CreatedAtAction(nameof(Get), new { id = metric.IpAddress }, metric);
         }
 
-       
+        [HttpGet("getThreshold")]
+        public async Task<List<Threshold>> GetThresholds()
+        {
+            return await _mongoDBService.GetAsyncTh();
+        }
+
+        [HttpGet("thresholds/{ThreshId}")]
+        public async Task<ActionResult<Threshold>> GetThId(string ThreshId)
+        {
+            var target = await _mongoDBService.GetThIdAsync(ThreshId);
+
+            if (target is null)
+            {
+                return NotFound();
+            }
+
+            return target;
+        }
+
+        [HttpPost("postThreshold")]
+        public async Task<IActionResult> PostThreshold([FromBody] Threshold threshold)
+        {
+            await _mongoDBService.CreateAsyncTh(threshold);
+            return CreatedAtAction(nameof(Get), new { id = threshold.ThreshId }, threshold);
+        }
+
+        [HttpPut("updateThreshold")]
+        public async Task<IActionResult> UpdateThresh(string ThreshId, [FromBody] Threshold threshold)
+        {
+            var thresh = await _mongoDBService.GetThIdAsync(ThreshId);
+
+            if (thresh is null)
+            {
+                return NotFound();
+            }
+
+            threshold.ThreshId = thresh.ThreshId;
+
+            await _mongoDBService.updateThresh(ThreshId, threshold);
+
+            return NoContent();
+        }
     }
 }

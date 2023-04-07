@@ -7,6 +7,8 @@
     {
         public string ConnectionURI { get; set; } = null!;
         public string DatabaseName { get; set; } = null!;
-        public string CollectionName { get; set; } = null!;
+        public string CollectionNameA { get; set; } = null!;
+
+        public string CollectionNameB { get; set; } = null!;
     }
 }

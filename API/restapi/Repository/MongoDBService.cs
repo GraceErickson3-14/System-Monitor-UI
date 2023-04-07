@@ -20,8 +20,15 @@ namespace restapi.Repository
     /// </summary>
     public class MongoDBService : IMongoDBService
     {
+
+        private readonly IMongoCollection<Threshold> _thresholdCollection;
+
         //readoly var which represent metric collection in this class
         private readonly IMongoCollection<Metric> _metricCollection;
+
+
+
+
 
         /// <summary>
         /// Constructor
@@ -32,7 +39,8 @@ namespace restapi.Repository
         {
             MongoClient client = new MongoClient(mongoDBSetting.Value.ConnectionURI);
             IMongoDatabase database = client.GetDatabase(mongoDBSetting.Value.DatabaseName);
-            _metricCollection = database.GetCollection<Metric>(mongoDBSetting.Value.CollectionName);
+            _metricCollection = database.GetCollection<Metric>(mongoDBSetting.Value.CollectionNameA);
+            _thresholdCollection = database.GetCollection<Threshold>(mongoDBSetting.Value.CollectionNameB);
 
         }
 
@@ -47,6 +55,12 @@ namespace restapi.Repository
             return;
         }
 
+        public async Task CreateAsyncTh(Threshold threshold)
+        {
+            await _thresholdCollection.InsertOneAsync(threshold);
+            return;
+        }
+
         /// <summary>
         /// Function for return every documentation that matches the fields in metric.cs in a list
         /// </summary>
@@ -56,6 +70,13 @@ namespace restapi.Repository
             //new BsonDocument used to make sure no filter is here
             //tolistasync - used to avoid cursor
             return await _metricCollection.Find(new BsonDocument()).ToListAsync();
+        }
+
+        public async Task<List<Threshold>> GetAsyncTh()
+        {
+            //new BsonDocument used to make sure no filter is here
+            //tolistasync - used to avoid cursor
+            return await _thresholdCollection.Find(new BsonDocument()).ToListAsync();
         }
 
         /// <summary>
@@ -69,8 +90,19 @@ namespace restapi.Repository
 
         }
 
+        public async Task<Threshold?> GetThIdAsync(string id)
+        {
+            return await _thresholdCollection.Find(x => x.ThreshId == id).FirstOrDefaultAsync();
+
+        }
 
 
+        public async Task updateThresh(string ThreshId, [FromBody] Threshold threshold)
+        {
+            await _thresholdCollection.ReplaceOneAsync(x => x.ThreshId == ThreshId, threshold);
+            return;
+
+        }
 
         /// <summary>
         /// function to get data base on user input time
