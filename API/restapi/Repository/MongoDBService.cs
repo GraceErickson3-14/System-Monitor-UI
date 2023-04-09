@@ -159,6 +159,7 @@ namespace restapi.Repository
                 Map(m => m.User).Name("User");
                 Map(m => m.System).Name("System");
                 Map(m => m.Idle).Name("Idle");
+                Map(m => m.Alert).Name("Alert");
             }
         }
 
@@ -169,6 +170,7 @@ namespace restapi.Repository
             {
                 Map(m => m.GigabytesUsed);
                 Map(m => m.AvailableMemory);
+                Map(m => m.Alert).Name("Alert");
             }
 
 
@@ -180,6 +182,7 @@ namespace restapi.Repository
                 Map(m => m.DiskName).Name("DiskName");
                 Map(m => m.NumberOfOperations).Name("NumberOfOperations");
                 Map(m => m.Latency).Name("Latency");
+                Map(m => m.Alert).Name("Alert");
                 References<DiskUseMap>(m => m.Disk_Utilization);
             }
 

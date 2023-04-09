@@ -25,12 +25,14 @@ namespace restapi.Models
         public double User { get; set; }
         public double System { get; set; }
         public double Idle { get; set; }
+        public string Alert { get; set; }
     }
 
     public class Memory_Usage
     {
         public double GigabytesUsed { get; set; }
         public double AvailableMemory { get; set; }
+        public string Alert { get; set; }
     }
 
     public class Disk
@@ -38,6 +40,7 @@ namespace restapi.Models
         public string DiskName { get; set; }
         public int NumberOfOperations { get; set; }
         public double Latency { get; set; }
+        public string Alert { get; set; }
         public Disk_Utilization Disk_Utilization { get; set; }
     }
 
