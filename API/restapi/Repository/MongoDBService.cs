@@ -18,7 +18,7 @@ namespace restapi.Repository
     /// service provide for handle mongodb database
     /// needed to register in program.cs
     /// </summary>
-    public class MongoDBService : IMongoDBService
+    public class MongoDBService
     {
 
         private readonly IMongoCollection<Threshold> _thresholdCollection;
@@ -84,9 +84,9 @@ namespace restapi.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Metric?> GetIdAsync(string ip)
+        public async Task<List<Metric>> GetIdAsync(string ip)
         {
-            return await _metricCollection.Find(x => x.IpAddress == ip).FirstOrDefaultAsync();
+            return await _metricCollection.Find(x => x.IpAddress == ip).ToListAsync();
 
         }
 
