@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using sandbox2;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,68 +8,16 @@ using System.Threading.Tasks;
 
 public class Metric
 {
-    private string Name;
-    private string Value;
-    private string Mode;
-    private string Core;
+    [BsonId]
+    public string? ipAddress { get; set; }
+    public DateTime timestamp { get; set; }
 
-    public string Names
-    {
-        get { return Name; }
-        set { Name = value; }
-    }
+    public CPU_Utilization cpU_Utilization { get; set; } = new CPU_Utilization();
+    public Disk[] disk { get; set; } = new Disk[0];
 
-    public string Values
-    {
-        get { return Value; }
-        set { Value = value; }
-    }
-
-    public string Modes
-    {
-        get { return Mode; }
-        set { Mode = value; }
-    }
-}
-public class windowsCpuCstate
-{
-    public string Name { get; set; }
-    public string state { get; set; }
-    public double value { get; set; }
-
-}
-
-public class windowsCsPhysicalMemorybyte
-{
-    public string Value { get; set; }
-}
-
-public class windowsOSVirtual
-{
-    public string value { get; set; }
+    public Memory_Usage memory_Usage { get; set; } = new Memory_Usage();
 }
 
 
-public class windowsSizeBytes
-{
-    private string Name;
-    private string Value;
-    private string Volume;
 
-    public string Names
-    {
-        get { return Name; }
-        set { Name = value; }
-    }
-    public string Values
-    {
-        get { return Value; }
-        set { Value = value; }
-    }
-    public string Volumes
-    {
-        get { return Volume; }
-        set { Volume = value; }
-    }
-}
 
