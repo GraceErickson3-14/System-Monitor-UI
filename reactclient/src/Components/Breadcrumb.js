@@ -34,11 +34,11 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
 
 function handleClick(event) {
   event.preventDefault();
-  console.info('You clicked a breadcrumb.');
+ 
   }
 
   
-  export default function CustomizedBreadcrumbs() {
+function CustomizedBreadcrumbs() {
     const { pathname } = useLocation();
     let breadcrumb;
 
@@ -93,8 +93,7 @@ function handleClick(event) {
         </Breadcrumbs>
       );
     }
-    
-    console.log("Breadcrumbs!!!", pathname);
+   
     return (
       <div role="presentation" onClick={handleClick}>
    
@@ -103,3 +102,6 @@ function handleClick(event) {
       </div>
     );
   };
+
+
+  export default React.memo(CustomizedBreadcrumbs);
