@@ -49,10 +49,10 @@ namespace restapi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Metric>> GetId(string id)
+        [HttpGet("{ip}")]
+        public async Task<ActionResult<Metric>> GetId(string ip)
         {
-            var target = await _mongoDBService.GetIdAsync(id);
+            var target = await _mongoDBService.GetIdAsync(ip);
 
             if (target is null)
             {

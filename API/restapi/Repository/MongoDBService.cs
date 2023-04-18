@@ -84,9 +84,9 @@ namespace restapi.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Metric?> GetIdAsync(string id)
+        public async Task<Metric?> GetIdAsync(string ip)
         {
-            return await _metricCollection.Find(x => x.IpAddress == id).FirstOrDefaultAsync();
+            return await _metricCollection.Find(x => x.IpAddress == ip).FirstOrDefaultAsync();
 
         }
 

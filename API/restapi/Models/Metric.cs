@@ -12,6 +12,8 @@ namespace restapi.Models
     public class Metric
     {
         [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
         public string? IpAddress { get; set; }
         public DateTime Timestamp { get; set; }
         public CPU_Utilization CPU_Utilization { get; set; }
