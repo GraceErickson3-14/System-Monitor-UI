@@ -64,4 +64,5 @@ class BarChart extends React.Component {
     }
 }
 
+
 export default BarChart;
