@@ -12,6 +12,7 @@ import BarChartSkeleton from './BarChartSkeleton';
 import TextField from './TextField';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import MyChip from './Chip';
 
 
 
@@ -54,7 +55,7 @@ const Cards = ({ title, subtitle, machineId}) => {
     }, 1000);
   }, []);
 
-  console.log("MachineId", machineId);
+
 
   return (
     <Card className={`myclass${thecolor}`} sx={{borderRadius:"30px"}}>
@@ -62,8 +63,8 @@ const Cards = ({ title, subtitle, machineId}) => {
       action={
         <>
           <TextField placeholder={machineId} />
-          <IconButton sx={{marginLeft:"230px",marginTop: "-50px", border: "1px solid black",fontSize: '1.5rem'}}>
-            <MoreHorizIcon />
+          <IconButton sx={{marginLeft:"235px",marginTop: "-60px"}}>
+            <MoreHorizIcon fontSize="large" />
           </IconButton>
         </>
       }
@@ -88,10 +89,10 @@ const Cards = ({ title, subtitle, machineId}) => {
       <Divider sx={{border: `.5px solid ${color}`}}/>
       <CardActions>
       <div style={{marginLeft:"10px"}}>
-      <Chip
-          label={status}
-          style={{ backgroundColor: color, color: "#FFF", border: '1.5px solid' + color,  fontSize: "0.875rem"}}
-        />
+     
+      <MyChip status = {status} color ={color}/>
+    
+
       </div>
       <Link to={`/detailed-view/${machineId}`} style={{ textDecoration: 'none' }}>
       <Button className={`viewButton${thestatus}`} startIcon={<TroubleshootIcon />} >
