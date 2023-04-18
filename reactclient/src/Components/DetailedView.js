@@ -291,10 +291,9 @@ console.log(`${id} threshold changed to (1):`, newState);*/}
                       <LineChart 
   labels={['9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm']} 
   data={[
-    [50, 48, 5, 30, 86, 0, 5, 20, 100],
-    [60, 40, 20, 10, 15, 55, 40, 30, 80]
+    [50, 48, 5, 30, 86, 0, 5, 20, 100]
   ]}
-  label={["Machine 1", "Machine 2"]}
+  label={["Machine 1"]}
 />
 
                         <Box sx={{paddingLeft:'150px', marginTop:"-28px"}} >
