@@ -1,96 +1,95 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import "./Reports.css";
 
 import Chart from 'chart.js';
+import ReportCharts from './ReportCharts'; 
+import MachineTable from './Table';
+import LineChart from "./LineChart";
+import Divider from '@mui/material/Divider';
+
 
 import axios from 'axios';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-
-const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'firstName',
-    headerName: 'First name',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'lastName',
-    headerName: 'Last name',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 110,
-    editable: true,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params: GridValueGetterParams) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
-];
-
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
-
-
 
 
 function Reports() {
-  const [selectedMachine, setSelectedMachine] = useState("");
-  const [selectedAttribute, setSelectedAttribute] = useState("");
 
-  const handleMachineChange = (event) => {
-    setSelectedMachine(event.target.value);
-  };
 
-  const handleAttributeChange = (event) => {
-    setSelectedAttribute(event.target.value);
-  };
-  
+  const [machines, setMachines] = useState([]);
+  const [machineData, setMachineData] = useState([]);
 
+  const [selectedData, setSelectedData] = useState(null);
+
+
+
+  // Fetch machine IDs
+  useEffect(() => {
+    fetchMachineId();
+  }, []);
+
+  const fetchMachineId = async () => {
+    let fetchedMachines = [];
+    try {
+      const response = await axios.get(`http://localhost:5105/api/metrics`);
+      fetchedMachines = fetchedMachines.concat(response.data);
+      setMachines(fetchedMachines);
+
+    //  console.log("Machine ID in reports:", fetchedMachines);
+
+      // Fetch data for each machine ID after fetching all IDs
+      fetchMachineData(fetchedMachines);
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const fetchMachineData = async (machineIds) => {
+    let fetchedMachineData = [];
+
+    for (const id of machineIds) {
+      try {
+        const response = await axios.get(`http://localhost:5105/api/metrics/${id}`);
+        fetchedMachineData.push(response.data);
+
+      } catch (error) {
+        console.error(`Error fetching data for machine ID ${id}:`, error);
+      }
+    }
+
+    setMachineData(fetchedMachineData);
+   // console.log("Machine data in reports:", fetchedMachineData);
+  }
+
+
+  function handleGeneratedReport(data) {
+    console.log("Report data from MachineTable:", data);
+    setSelectedData(data);
+  }
+
+  //console.log("selectedData.labels", selectedData.labels);
+  //const dataArray = Object.values(selectedData.data[0]);
+  //console.log("data array",dataArray[0]);
   return (
     <div className="comp">
     <Container maxWidth="xl" sx={{ margin: 'auto' }}>
       {/* Baby Blue background*/}
       <Box className="container_box">
-      return (
-    <Box sx={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 5,
-            },
-          },
-        }}
-        pageSizeOptions={[5]}
-        checkboxSelection
-        disableRowSelectionOnClick
-      />
-    </Box>
-  );
+      <div style={{marginBottom:"80px"}}>
+      <MachineTable data={machineData} onGenerateReport={handleGeneratedReport} />
+
+      </div>
+      <div style={{marginBottom:"40px"}}>
+      <Divider sx={{ borderWidth: '1px', borderColor: 'black', borderRadius: "100px" }} />
+      </div>
+
+      <LineChart 
+          labels={['9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm']} 
+          data={[]}
+          label={["Machine 1"]}
+        />
+
       
       </Box>
     </Container>
