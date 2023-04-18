@@ -1,0 +1,8 @@
+.groupedColumnHeader {
+    border-right: none;
+  }
+  
+  .groupedColumnHeader:last-child {
+    border-right: 1px solid rgba(224, 224, 224, 1);
+  }
+  
