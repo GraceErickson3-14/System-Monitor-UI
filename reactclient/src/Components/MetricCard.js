@@ -7,21 +7,32 @@ import Grid from '@mui/material/Grid';
 
 import SetThreshold from './SetThreshold';
 
-function MetricCard(props) {
-
+function MetricCard({ onMemoryThresholdChange, onCpuThresholdChange, onDiskThresholdChange }) {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={4}>
-       <SetThreshold/>
+        <SetThreshold
+          sliderId="memory"
+          onStateChange={onMemoryThresholdChange}
+        />
       </Grid>
       <Grid item xs={12} sm={4}>
-      <SetThreshold/>
+        <SetThreshold
+          sliderId="cpu"
+          onStateChange={onCpuThresholdChange}
+        />
       </Grid>
       <Grid item xs={12} sm={4}>
-      <SetThreshold/>
+        <SetThreshold
+          sliderId="disk"
+          onStateChange={onDiskThresholdChange}
+        />
       </Grid>
     </Grid>
   );
-  }
+}
+
+
+
 
 export default MetricCard; 
