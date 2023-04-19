@@ -10,37 +10,72 @@ ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale);
 const pointImage = new Image();
 pointImage.src = "https://www.freeiconspng.com/thumbs/warning-icon-png/status-warning-icon-png-29.png";
 
-
-const LineChart = ({ 
-  labels = [], 
-  data: inputData = [], 
-  label = [], 
-  onStateChange = () => {} 
+const LineChart = ({
+  labels = [],
+  data: inputData = [],
+  label = [],
+  onStateChange = () => {},
+  threshold = 0,
 }) => {
-  // Check if the required props are provided
   const hasData = labels.length > 0 && inputData.length > 0 && label.length > 0;
-
-  console.log("inputData:",inputData);
 
   const initialData = {
     labels: labels.length > 0 ? labels : [null],
-    datasets: hasData ? inputData.map((data, index) => ({
-      label: label[index],
-      data: data,
-      backgroundColor: ['rgba(30, 136, 229, 0.85)',
-                        'rgba(144, 202, 249)',
-                        'rgba(103, 58, 183, 0.85)']
-    })) : [{
-      label: '',
-      data: [null],
-      borderColor: 'transparent',
-      backgroundColor: 'transparent',
-    }]
+    datasets: hasData
+      ? label.map((label, index) => ({
+          label: label,
+          data: inputData[index] ? inputData[index] : inputData,
+          backgroundColor: [
+            "rgba(30, 136, 229, 0.85)",
+            "rgba(144, 202, 249)",
+            "rgba(103, 58, 183, 0.85)",
+          ],
+        }))
+      : [
+          {
+            label: "",
+            data: [null],
+            borderColor: "transparent",
+            backgroundColor: "transparent",
+          },
+        ],
   };
 
   const [data, setData] = useLineState(initialData, onStateChange);
 
-  console.log("finalData:", data);
+  useEffect(() => {
+    if (hasData) {
+      const updatedData = {
+        labels: labels,
+        datasets: label.map((label, index) => ({
+          label: label,
+          data: inputData[index] ? inputData[index] : inputData,
+          backgroundColor: [
+            "rgba(30, 136, 229, 0.85)",
+            "rgba(144, 202, 249)",
+            "rgba(103, 58, 183, 0.85)",
+          ],
+        })),
+      };
+      setData(updatedData);
+    }
+  }, [labels, inputData, label]);
+
+  const getPointStyle = (data, threshold) => {
+    return data.map((point) => {
+      if (point >= threshold) {
+        const canvas = document.createElement("canvas");
+        canvas.width = 5;
+        canvas.height = 5;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(pointImage, 0, 0, 5, 5);
+        return canvas;
+      } else {
+        return "circle";
+      }
+    });
+  };
+
 
   return (
     <div className="line-chart">
@@ -55,6 +90,11 @@ const LineChart = ({
           },
           elements: {
             point: {
+              pointStyle: (context) => {
+                const index = context.dataIndex;
+                const value = context.dataset.data[index];
+                return getPointStyle([value], threshold)[0];
+              },
             }
           },
           legend: {
