@@ -2,14 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import "./Reports.css";
-
-import Chart from 'chart.js';
-import ReportCharts from './ReportCharts'; 
 import MachineTable from './Table';
 import LineChart from "./LineChart";
 import Divider from '@mui/material/Divider';
-
-
 import axios from 'axios';
 
 
@@ -19,7 +14,7 @@ function Reports() {
   const [machines, setMachines] = useState([]);
   const [machineData, setMachineData] = useState([]);
 
-  const [selectedData, setSelectedData] = useState(null);
+  const [selectedData, setSelectedData] = useState({ labels: [], data: [] });
 
 
 
@@ -66,10 +61,13 @@ function Reports() {
   function handleGeneratedReport(data) {
     console.log("Report data from MachineTable:", data);
     setSelectedData(data);
+  
   }
 
-  //console.log("selectedData.labels", selectedData.labels);
-  //const dataArray = Object.values(selectedData.data[0]);
+ 
+ const testData = [
+  [30, 10, 60, 3, 7, 85, 15, 120, 0.1],
+];
   //console.log("data array",dataArray[0]);
   return (
     <div className="comp">
@@ -84,11 +82,13 @@ function Reports() {
       <Divider sx={{ borderWidth: '1px', borderColor: 'black', borderRadius: "100px" }} />
       </div>
 
-      <LineChart 
-          labels={['9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm']} 
-          data={[]}
-          label={["Machine 1"]}
-        />
+      
+          <LineChart
+            labels={['9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm']}
+            data={selectedData.data}
+            label={selectedData.labels}
+          />
+      
 
       
       </Box>
