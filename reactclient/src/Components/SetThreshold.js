@@ -10,12 +10,15 @@ import Tooltip from '@mui/material/Tooltip';
 import Odometer from 'react-odometerjs';
 import 'odometer/themes/odometer-theme-plaza.css';
 import "./SetThreshold.css";
-
-
 import { Card, CardHeader, CardContent, CardActions, Divider, Avatar } from '@mui/material';
+import useThresholdState from './hooks/useSliderState';
+import PropTypes from 'prop-types';
+
+
+
 
 const getTrackColor = (memoryThreshold) => {
-  console.log("VALUEEE: ", memoryThreshold);
+
   if (memoryThreshold < 25) {
     return 'grey' 
   } else if (memoryThreshold <= 50) {
@@ -23,12 +26,12 @@ const getTrackColor = (memoryThreshold) => {
   } else if (memoryThreshold <= 75) {
     return 'rgba(30, 136, 229, 0.85)'; 
   } else {
-    return 'rgba(103, 58, 183, 0.85)'; // green
+    return 'rgba(103, 58, 183, 0.85)'; 
   }
 };
 
+const StyledSlider = styled(Slider)(({ memoryThreshold }) => ({
 
-  const StyledSlider = styled(Slider)(({ memoryThreshold }) => ({
     '& .MuiSlider-rail': {
       height: '8px',
       borderRadius: '4px',
@@ -58,7 +61,7 @@ const getTrackColor = (memoryThreshold) => {
       color: 'black',
       fontSize: '0.75rem',
       whiteSpace: 'nowrap',
-      zIndex: 1,
+
     },
     '& .MuiSlider-valueLabel': {
       lineHeight: 1.2,
@@ -80,44 +83,52 @@ const getTrackColor = (memoryThreshold) => {
       },
     },
   }));
+
+ 
+
   
-  function SetThreshold(props) {
-    const [memoryThreshold, setMemoryThreshold] = useState(2);
-  
-    const marks = [    {      value: 0,      label: '0',    },    {      value: 25,      label: '25',    },    {      value: 50,      label: '50',    },    {      value: 75,      label: '75',    },    {      value: 100,      label: '100',    },  ];
-  
+  function SetThreshold({ sliderId, onStateChange = () => {} }) {
+    const [memoryThreshold, setMemoryThreshold] = useThresholdState(50, onStateChange);
+
+
+
     const handleSliderChange = (event, newValue) => {
       setMemoryThreshold(newValue);
-      console.log("Mem thresh:", memoryThreshold);
+ 
+      onStateChange(sliderId, newValue); 
+      
     };
-
-
+   
+    const marks = [    {      value: 0,      label: '0',    },    {      value: 25,      label: '25',    },    {      value: 50,      label: '50',    },    {      value: 75,      label: '75',    },    {      value: 100,      label: '100',    },  ];
+ 
     return(
 
-    <Card>
-    <CardHeader  sx={{ color: 'rgba(0, 0, 0, 0.6)' }} >
-    <h1>CPU</h1> 
+    <Card sx={{border: ".1px solid #D0D0D0", boxShadow: "0 0 8px #D0D0D0", borderRadius:"40px"}}>
+    <CardHeader title={sliderId.toUpperCase()} sx={{ color: 'rgba(0, 0, 0, 0.6)' }} >
+  
     </CardHeader>
-        <Divider />
+        <Divider sx ={{border: "1px dashed grey"}}/>
 
         <CardContent>
 
-        <div className= "odometer-theme-example">
-        <Odometer value={12345} format="(,ddd)" theme="plaza" />
+        <Box sx={{mt: 4}}>
+        <div className= "odometer-theme-example" style = {{backgroundColor: "#f0f8ff"}}>
+        <Odometer value={memoryThreshold} format="(,ddd)" theme="plaza" />
         </div>
+        </Box>
 
         {/*Bottom slider */}
         <Box sx={{ mt: 8, marginLeft: -1 }}>
         <StyledSlider
-          aria-labelledby="cpu-slider"
-          valueLabelDisplay="on"
-          min={0}
-          max={100}
-          value={memoryThreshold}
-          onChange={handleSliderChange}
-          memoryThreshold={memoryThreshold}
-          backgroundColor={getTrackColor}
-          marks = {marks}
+            aria-labelledby="cpu-slider"
+            valueLabelDisplay="on"
+            min={0}
+            max={100}
+            id={sliderId}
+            memoryThreshold={memoryThreshold}
+            value={memoryThreshold}
+            onChange={handleSliderChange}
+            marks={marks}
           />
 
         </Box>
