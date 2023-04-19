@@ -34,7 +34,7 @@ namespace sandbox2 {
                 if (address.AddressFamily == AddressFamily.InterNetwork)
                 {
                     ipAddress = address.ToString();
-                    metric.ipAddress = ipAddress;
+                    metric.IpAddress = ipAddress;
   
 
                     break;
@@ -43,7 +43,7 @@ namespace sandbox2 {
             int cpuUserCount = 0;
             int cpuIdleCount = 0;
             int cpuInterruptCount = 0;
-            int cpuTotalCount = 0;
+            int cpuTotalCount = 1;
 
             foreach (var line in lines)
             {
@@ -56,6 +56,7 @@ namespace sandbox2 {
                     if (line.Contains("mode=\"interrupt\"")) cpuInterruptCount++;
 
                     cpuTotalCount = cpuUserCount + cpuIdleCount + cpuInterruptCount;
+          
 
                 }
                 if (line.Contains("windows_cs_physical_memory_bytes"))
@@ -131,7 +132,8 @@ namespace sandbox2 {
 
                 var newMetric = new Metric
                 {
-                    ipAddress = ipAddress,
+                    Id = metric.Id,
+                    IpAddress = ipAddress,
                     timestamp = DateTime.UtcNow,
                     cpU_Utilization = new CPU_Utilization
                     {
@@ -165,18 +167,6 @@ namespace sandbox2 {
                     };
                 }
 
-                if (double.IsInfinity(newMetric.cpU_Utilization.user))
-                {
-                    newMetric.cpU_Utilization.user = double.MaxValue;
-                }
-                if (double.IsInfinity(newMetric.cpU_Utilization.system))
-                {
-                    newMetric.cpU_Utilization.system = double.MaxValue;
-                }
-                if (double.IsInfinity(newMetric.cpU_Utilization.idle))
-                {
-                    newMetric.cpU_Utilization.idle = double.MaxValue;
-                }
 
                 var options = new JsonSerializerOptions
                 {
@@ -191,7 +181,7 @@ namespace sandbox2 {
                 var responseString = await response1.Content.ReadAsStringAsync();
 
 
-
+              
             }
         }
     }
