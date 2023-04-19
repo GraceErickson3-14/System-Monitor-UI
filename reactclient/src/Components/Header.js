@@ -23,9 +23,6 @@ const theme = createTheme({
     },
   });
   
-
-
-
   const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false);
   
