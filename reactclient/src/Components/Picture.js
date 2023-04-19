@@ -9,6 +9,7 @@ import LandingPageSkeleton from './LandingPageSkeleton';
 import AddIcon from '@mui/icons-material/Add';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import { Link } from "react-router-dom";
+import "./detectiveAnimation.css";
 
 const Picture = () => {
   const [machines, setMachines] = useState([]);
@@ -26,7 +27,6 @@ const Picture = () => {
       fetchedMachines = fetchedMachines.concat(response.data);
       setMachines(fetchedMachines);
 
-      console.log("ID", fetchedMachines);
     } catch (error) {
       console.error(error);
     }
@@ -51,7 +51,7 @@ const Picture = () => {
           <Box className="container_box">
             <Grid container spacing={2} sx={{ rowGap: 0 }}>
               <Grid item xs={3} sx={{ gridColumn: '1 / span 1', gridRow: '1 / span 1' }}>
-                <img src={logo} style={{ width: "85%", height: "85%", marginLeft:"20px" }} />
+              <img src={logo} style={{ width: "85%", height: "85%", marginLeft:"20px" }} />
                 <Link to={`/reports`} style={{ textDecoration: 'none' }}>
                 <Button sx={{marginLeft:'60px', marginTop: "10px", backgroundColor:"#673AB7", width: "170px"}}variant="contained" color="primary" size="large" startIcon={<QueryStatsIcon />}>
                  Reports
