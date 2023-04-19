@@ -71,4 +71,5 @@ const SkeletonDetailedView= (props) => {
   );
 };
 
+
 export default SkeletonDetailedView;
